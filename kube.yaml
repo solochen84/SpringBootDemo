@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: maven-service
+spec:
+  type: NodePort
+  ports:
+  - name: maven
+    port: 8080
+    nodePort: 31002
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    app: maven
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: maven-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: maven
+    spec:
+      containers:
+        - name: maven
+          image: 192.168.133.131:5000/maven:latest
+          ports:
+          - containerPort: 8080
+          env:
+            - name: key
+              value: "value"
