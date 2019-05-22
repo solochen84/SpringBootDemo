@@ -1,0 +1,5 @@
+删除文件
+
+git rm <file>
+
+git commit
